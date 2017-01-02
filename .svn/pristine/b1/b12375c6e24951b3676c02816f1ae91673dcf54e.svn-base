@@ -1,0 +1,7 @@
+/=kr.co.findourlunch.web.MainAction
+/index.do=kr.co.findourlunch.web.MainAction
+/quick/quickSelect.do=kr.co.findourlunch.quick.QuickAction
+
+/history/historyInsert.do=kr.co.findourlunch.history.HistoryAction
+
+/search/advancedSearch.do=kr.co.findourlunch.search.SearchAction

@@ -1,0 +1,35 @@
+package kr.co.findourlunch.weather;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.jasper.tagplugins.jstl.core.When;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import kr.co.findourlunch.common.action.AbstractAction;
+import kr.co.findourlunch.menu.RestaurantVO;
+import kr.co.findourlunch.quick.QuickSVC;
+import kr.co.findourlunch.quick.QuickSVCImpl;
+
+public class WeatherAction extends AbstractAction {
+
+	@Override
+	public String perform(HttpServletRequest request,
+			HttpServletResponse response, String action)
+			throws ServletException, IOException {
+		String view = "/ajaxResult.jsp";
+
+		//날씨정보를 가지고  벨류코드를 조회한 후에
+		//메뉴를 json으로 뿌려준다.
+		setRedirect(false);
+		return view;
+	}
+	private JsonObject json;
+
+
+}

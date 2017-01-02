@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Search">
+
+	<resultMap class="cateCodeVO" id="searchCateCodeListMap" groupBy="cate_id">
+		<result property="cate_id" column="cate_id"/>
+		<result property="name" column="name"/>
+		<result property="valueList" select="Search.selectSearchValueCode" column="cate_id"/>
+	</resultMap>
+
+	
+	<select id="selectSearchCateCode" resultMap="Search.searchCateCodeListMap" remapResults="true" parameterClass="cateCodeVO" >
+		<![CDATA[
+
+			SELECT
+				cate_id,
+				name
+			FROM CATECODE
+			
+		]]>
+		<!-- 			SELECT  -->
+<!-- 				cc.cate_id as cate_id,  -->
+<!-- 				cc.name as name, -->
+<!-- 				vc.value_id as value_id -->
+<!-- 				vc.value as value, -->
+<!-- 				vc.ref_cate_id as ref_cate_id -->
+<!-- 			FROM catecode cc, valuecode vc -->
+<!-- 			WHERE cc.cate_id = vc.cate_id -->
+<!-- 			ORDER BY cc.cate_id -->
+		
+	</select>
+
+	<resultMap class="valueCodeVO" id="searchValueCodeListMap">
+		<result property="value_id" column="value_id"/>
+		<result property="value" column="value"/>
+		<result property="ref_cate_id" column="ref_cate_id"/>
+	</resultMap>
+
+	<select id="selectSearchValueCode" resultMap="searchValueCodeListMap" parameterClass="int" remapResults="true">
+		<![CDATA[
+			SELECT 
+				value_id,
+				value,
+				ref_cate_id
+			FROM valuecode
+			WHERE ref_cate_id = #cate_id#
+		]]>
+	</select>
+
+
+
+	<resultMap class="searchVO" id="advancedSearchMap" groupBy="menu_id">
+		<result property="id" column="id"/>
+		<result property="menu_id" column="menu_id"/>
+		<result property="cate_id" column="cate_id"/>
+		<result property="value_id" column="value_id"/>
+		<result property="menuList" select="Search.selectMenuList" column="menu_id" />
+	</resultMap>
+
+	<select id="advancedSearch" parameterClass="searchVO" resultMap="advancedSearchMap" resultClass="list">
+		<![CDATA[
+		SELECT 
+			id,
+			menu_id,
+			cate_id,
+			value_id
+		FROM MENUDATA
+		]]>
+		<iterate property="searchWordList" prepend="WHERE" conjunction="or">
+			VALUE_ID = #searchWordList[]#
+		</iterate>		
+	</select>
+	
+	<resultMap class="menuVO" id="selectMenuListMap">
+		<result property="id" column="id"/>
+		<result property="name" column="name"/>
+	</resultMap>
+	
+	<select id="selectMenuList" parameterClass="int" resultMap="selectMenuListMap">
+		<![CDATA[
+		SELECT id,
+               name
+		FROM MENU
+		WHERE id = #menu_id#
+		]]>
+	
+	</select>
+	
+</sqlMap>

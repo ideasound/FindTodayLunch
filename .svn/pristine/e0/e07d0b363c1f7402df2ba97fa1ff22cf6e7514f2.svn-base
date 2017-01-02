@@ -1,0 +1,39 @@
+package kr.co.findourlunch.web;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import kr.co.findourlunch.common.action.AbstractAction;
+import kr.co.findourlunch.menu.CateCodeVO;
+import kr.co.findourlunch.menu.ValueCodeVO;
+import kr.co.findourlunch.search.SearchSVC;
+import kr.co.findourlunch.search.SearchSVCImpl;
+
+public class MainAction extends AbstractAction {
+
+	@Override
+	public String perform(HttpServletRequest request,
+			HttpServletResponse response, String action) throws ServletException, IOException {
+		String view = "/index.jsp";
+		setRedirect(false);
+		
+		SearchSVC service = new SearchSVCImpl();
+		
+		List<CateCodeVO> cateCodeList = service.selectSearchCateCode();
+		
+//		List<ValueCodeVO> valueCodeList = service.selectSearchValueCode();
+		
+		// 최근 3일 방문 이력
+		
+		
+		
+		request.setAttribute("cateCodeList", cateCodeList);
+//		request.setAttribute("valueCodeList", valueCodeList);
+		return view;
+	}
+
+}

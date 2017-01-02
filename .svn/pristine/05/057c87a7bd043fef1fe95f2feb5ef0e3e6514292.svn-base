@@ -1,0 +1,14 @@
+package kr.co.findourlunch.history;
+
+import java.util.Map;
+
+public interface HistorySVC {
+	
+	enum HistoryResult{ COMPLETE, FAILED };
+	
+	/** History Insert
+	 * @return void
+	 */
+	public HistoryResult insertHistory(Map<String, Object> map);
+	
+}

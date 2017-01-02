@@ -1,0 +1,48 @@
+package kr.co.findourlunch.history;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class HistoryVO {
+	
+	private String visit_date;
+	
+	private String nightORday;
+	
+	private int restaurant_id;
+
+	public String getVisit_date() {
+		return visit_date;
+	}
+
+	public void setVisit_date(String visit_date) {
+		this.visit_date = visit_date;
+	}
+
+	public String getNightORday() {
+		return nightORday;
+	}
+
+	public void setNightORday(String nightORday) {
+		this.nightORday = nightORday;
+	}
+
+	public int getRestaurant_id() {
+		return restaurant_id;
+	}
+
+	public void setRestaurant_id(int restaurant_id) {
+		this.restaurant_id = restaurant_id;
+	}
+	
+	public Map<String, Object> toMap(){
+		Map<String, Object> map = new HashMap<String,Object>();
+		
+		map.put("visit_date", getVisit_date());
+		map.put("nightORday", getNightORday());
+		map.put("restaurant_id", getRestaurant_id());
+		
+		return map;
+	}
+	
+}

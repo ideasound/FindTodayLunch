@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig
+PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+
+	<properties resource="ibatis/db.properties"/>
+	
+	<settings useStatementNamespaces="true"/>
+	
+	<typeAlias alias="menuVO" type="kr.co.findourlunch.menu.MenuVO"/>
+	<typeAlias alias="restaurantVO" type="kr.co.findourlunch.menu.RestaurantVO"/>
+	<typeAlias alias="historyVO" type="kr.co.findourlunch.history.HistoryVO"/>
+	<typeAlias alias="list" type="java.util.List"/>
+	<typeAlias alias="map" type="java.util.Map"/>
+	
+	<transactionManager type="JDBC" commitRequired="true">
+		<dataSource type="DBCP">
+			<property name="driverClassName" value="${driver}"/>
+			<property name="url" value="${url}"/>
+			<property name="username" value="${username}"/>
+			<property name="password" value="${password}"/>
+			<property name="maxActive" value="20"/>		
+		</dataSource>
+	</transactionManager>
+	
+	<sqlMap resource="ibatis/mapping/quick.xml"/>
+	<sqlMap resource="ibatis/mapping/history.xml"/>
+	
+</sqlMapConfig>

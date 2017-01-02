@@ -1,0 +1,53 @@
+package kr.co.findourlunch.weather;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.jasper.tagplugins.jstl.core.When;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import kr.co.findourlunch.common.action.AbstractAction;
+import kr.co.findourlunch.menu.MenudataVO;
+import kr.co.findourlunch.menu.RestaurantVO;
+import kr.co.findourlunch.menu.ValueCodeVO;
+import kr.co.findourlunch.quick.QuickSVC;
+import kr.co.findourlunch.quick.QuickSVCImpl;
+
+public class WeatherAction extends AbstractAction {
+
+	@Override
+	public String perform(HttpServletRequest request,
+			HttpServletResponse response, String action)
+			throws ServletException, IOException {
+		String view = "/ajaxResult.jsp";
+
+		//날씨정보를 가지고  벨류코드를 조회한 후에
+		//메뉴를 json으로 뿌려준다.
+		int weather_code = 0;
+		if (request.getAttribute("weather")!=null){
+			weather_code = (Integer) request.getAttribute("weather");
+		}
+		int code = Math.round(weather_code/100) * 100;
+		WeatherImpl impl = new WeatherImpl();
+		List<MenudataVO> list = new ArrayList<MenudataVO>();
+		list = impl.selectMenuListByWeather(code);
+		
+		String json = "";
+		Gson gson = new Gson();
+		json = gson.toJson(list);
+		request.setAttribute("json", json);
+		
+		setRedirect(false);
+		return view;
+	}
+	private JsonObject json;
+
+
+}

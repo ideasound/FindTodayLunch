@@ -1,0 +1,4 @@
+driver=oracle.jdbc.driver.OracleDriver
+url=jdbc:oracle:thin:@10.211.55.3:1521:xe
+username=lunch
+password=lunch

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="History">
+
+	<insert id="insertHistory" parameterClass="map">
+	<![CDATA[
+		INSERT
+		INTO VISITHISTORY
+		  (
+		    VISITDATE,
+		    NIGHTORDAY,
+		    RESTAURANT_ID
+		  )
+		  VALUES
+		  (
+		    to_date(#visitDate#, 'yyyy-mm-dd'),
+		    #nightORday#,
+		    #restaurant_id#
+		  )
+	]]>
+	</insert>
+	
+	<resultMap class="historyVO" id="selectBefore3DayHistoryMap" >
+		<result property="visitDate" column="visitDate"/>
+		<result property="nightORday" column="nightORday"/>
+		<result property="restaurantName" column="restaurantName" />
+	</resultMap>
+	
+	<select id="selectBefore3DayHistory" resultMap="selectBefore3DayHistoryMap">
+		<![CDATA[
+		SELECT
+				visitDate, 
+				nightORday,
+				restaurantName
+		FROM
+				(
+					SELECT
+						 to_char(visitDate, 'yyyy-mm-dd') as visitDate,
+						 nightORday, 
+						 r.name restaurantName,
+						 ROWNUM rnum
+					FROM 
+						visithistory h, restaurant r
+					WHERE h.restaurant_id = r.id
+					ORDER BY visitdate DESC
+				)
+		WHERE rnum <= 10
+		]]>
+	</select>
+	
+</sqlMap>

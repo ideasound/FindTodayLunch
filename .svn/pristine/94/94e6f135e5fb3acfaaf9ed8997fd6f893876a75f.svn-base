@@ -1,0 +1,24 @@
+package kr.co.findourlunch.weather;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import kr.co.findourlunch.menu.CateCodeVO;
+import kr.co.findourlunch.menu.MenudataVO;
+import kr.co.findourlunch.menu.SearchVO;
+import kr.co.findourlunch.menu.ValueCodeVO;
+
+public class WeatherImpl {
+
+	private WeatherDAO dao = WeatherDAO.getInstance();
+
+	public List<MenudataVO> selectMenuListByWeather(int code) {
+		List<MenudataVO> list = new ArrayList<MenudataVO>();
+		list = dao.selectMenuListByWeather(code);
+		return list;
+	}
+
+
+
+	
+}

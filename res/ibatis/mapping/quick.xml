@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Quick">
+
+	<resultMap class="restaurantVO" id="quickListMap">
+		<result property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="addr" column="addr"/>
+		<result property="contact" column="contact"/>
+		<result property="cateName" column="cateName"/>
+	</resultMap>
+
+	<select id="selectQuickList" resultMap="quickListMap" >
+		<![CDATA[
+		SELECT 
+			r.id as id,
+			r.name as name,
+			r.addr as addr,
+			r.contact as contact,
+			(select name from restcatecode where id = r.cate_id) cateName
+		FROM 
+			restaurant r,
+			restcatecode rcate,
+			(
+			SELECT
+				visitDate, 
+				nightORday,
+				restaurant_id
+			FROM
+					(
+						SELECT
+							 visitDate,
+							 nightORday, 
+							 restaurant_id,
+							 ROWNUM rnum
+						FROM 
+							visithistory h
+						ORDER BY visitdate DESC
+					)
+			WHERE rnum < 6
+			) h
+		WHERE
+			r.cate_id = rcate.id
+		AND rcate.id = 1
+		AND r.id = h.restaurant_id
+		]]>
+	</select>
+	
+	<select id="selectQuickListSnd" resultMap="quickListMap">
+			SELECT 
+			r.id as id,
+			r.name as name,
+			r.addr as addr,
+			r.contact as contact,
+			(select name from restcatecode where id = r.cate_id) cateName
+		FROM 
+			restaurant r,
+			restcatecode rcate,
+			(
+				SELECT
+					visitDate, 
+					nightORday,
+					restaurant_id
+				FROM
+						(
+							SELECT
+								 visitDate,
+								 nightORday, 
+								 restaurant_id,
+								 ROWNUM rnum
+							FROM 
+								visithistory h
+							ORDER BY visitdate DESC
+						)
+				WHERE rnum > 2
+			) h
+		WHERE
+				r.cate_id = rcate.id
+			AND rcate.id = 1
+	</select>
+	
+</sqlMap>

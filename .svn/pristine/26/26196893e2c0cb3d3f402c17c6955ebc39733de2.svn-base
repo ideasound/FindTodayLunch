@@ -1,0 +1,47 @@
+package kr.or.findourlunch.search;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import kr.co.findourlunch.common.action.AbstractAction;
+import kr.co.findourlunch.menu.SearchVO;
+
+public class SearchAction extends AbstractAction {
+
+	@Override
+	public String perform(HttpServletRequest request,
+			HttpServletResponse response, String action)
+			throws ServletException, IOException {
+		
+		String view="";
+		setRedirect(true);
+		
+		String[] values = request.getParameterValues("value_id");
+		
+		List<String> valueList = new ArrayList<String>();
+		
+		if(values!=null){
+			for(String value : values){
+				valueList.add(value);
+			}
+		}
+		
+		SearchVO vo = new SearchVO();
+		vo.setSearchWordList(valueList);
+		
+		SearchSVC svc = new SearchSVCImpl();
+		
+		
+		
+		
+
+		
+		return view;
+	}
+
+}

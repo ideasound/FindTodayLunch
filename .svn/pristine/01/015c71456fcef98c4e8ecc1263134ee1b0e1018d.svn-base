@@ -1,0 +1,26 @@
+package kr.co.findourlunch.quick;
+
+import java.util.List;
+
+import kr.co.findourlunch.menu.RestaurantVO;
+
+public class QuickSVCImpl implements QuickSVC {
+
+	private QuickDAO dao = QuickDAO.getInstance();
+
+	@Override
+	public RestaurantVO selectQuickRestaurant() {
+		// TODO Auto-generated method stub
+		RestaurantVO vo = null;
+
+		List<RestaurantVO> quickList = dao.selectQuick();
+
+		int size = quickList.size();
+
+		int random = (int) (Math.random() * size) + 1;
+		vo = quickList.get(random-1);
+	
+		return vo;
+	}
+
+}

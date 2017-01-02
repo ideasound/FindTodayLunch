@@ -1,0 +1,62 @@
+package kr.co.findourlunch.quick;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import kr.co.findourlunch.menu.RestaurantVO;
+import kr.co.findourlunch.restaurant.RestaurantDAO;
+
+public class QuickSVCImpl implements QuickSVC {
+
+	private QuickDAO dao = QuickDAO.getInstance();
+	private RestaurantDAO restDao = RestaurantDAO.getInstance();
+	
+	@Override
+	public RestaurantVO selectQuickRestaurant() {
+		// TODO Auto-generated method stub
+		RestaurantVO vo = null;
+		
+		// 최근 6개 목록을 가져온다.(점심, 저녁 3일)
+		List<RestaurantVO> quickList = dao.selectQuickList();
+		
+		// 구내식당 전체 목록을 가져온다.
+		List<RestaurantVO> allList = restDao.selectAllCafeteriaList();
+		
+		int loopCnt = quickList.size() * allList.size();
+		int allSize = allList.size();
+		int quckSize = quickList.size();
+		Set<RestaurantVO> set = new HashSet<RestaurantVO>();
+		
+		int dupCnt = 0;
+		for(int i=0; i<quickList.size(); i++){
+			String quickID = quickList.get(i).getId();
+			for(int j=0; j<allList.size(); j++){
+				if(quickID.equals(allList.get(j).getId())){
+					dupCnt++;
+				}
+			}
+		}
+		
+		
+		
+		RestaurantVO temp = new RestaurantVO();
+		int random = (int) (Math.random() * quckSize) + dupCnt;
+		// 목록에서 랜덤으로 뽑는다.
+		temp = quickList.get(random-1);
+		// 뽑힌 것 중에 3일 이전 목록이 아닌 경우에 해당하는 식당을 돌려준다.
+		for(RestaurantVO restaurant : quickList){
+			if(!restaurant.getId().equals(temp.getId())){
+				vo = temp;
+				break;
+			}
+		}
+		
+		if(vo==null){
+			vo = temp;
+		}
+		
+		return vo;
+	}
+
+}

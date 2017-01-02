@@ -1,0 +1,7 @@
+package kr.co.findourlunch.menu;
+
+public class ValuecodeVO {
+	private int value_id;
+	private String value;
+	private int ref_cate_id;
+}

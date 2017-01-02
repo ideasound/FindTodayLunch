@@ -1,0 +1,29 @@
+package kr.co.findourlunch.util;
+
+import java.io.IOException;
+import java.io.Reader;
+
+import com.ibatis.common.resources.Resources;
+import com.ibatis.sqlmap.client.SqlMapClient;
+import com.ibatis.sqlmap.client.SqlMapClientBuilder;
+
+public class SqlMapper {
+
+	static SqlMapClient sqlMapClient;
+
+	static {
+		try {
+			Reader reader = Resources
+					.getResourceAsReader("ibatis/SqlMapConfig.xml");
+			sqlMapClient = SqlMapClientBuilder.buildSqlMapClient(reader);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static SqlMapClient getSqlMapClient() {
+		return sqlMapClient;
+	}
+
+}

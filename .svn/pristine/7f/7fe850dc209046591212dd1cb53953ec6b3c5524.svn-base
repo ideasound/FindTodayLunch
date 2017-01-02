@@ -1,0 +1,29 @@
+package kr.co.findourlunch.menu;
+
+import java.util.List;
+
+public class SearchVO {
+	
+	private List<ValueCodeVO> valueList;
+	
+	private List<String> searchWordList;
+
+	public List<ValueCodeVO> getValueList() {
+		return valueList;
+	}
+
+	public void setValueList(List<ValueCodeVO> valueList) {
+		this.valueList = valueList;
+	}
+
+	public List<String> getSearchWordList() {
+		return searchWordList;
+	}
+
+	public void setSearchWordList(List<String> searchWordList) {
+		this.searchWordList = searchWordList;
+	}
+	
+	
+	
+}

@@ -1,0 +1,54 @@
+package kr.co.findourlunch.history;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import kr.co.findourlunch.util.SqlMapper;
+
+import com.ibatis.sqlmap.client.SqlMapClient;
+
+public class HistoryDAO {
+	
+	
+	private SqlMapClient mapper = SqlMapper.getSqlMapClient();
+	
+	private static HistoryDAO dao;
+	private HistoryDAO(){}
+	
+	public static HistoryDAO getInstance(){
+		if(dao==null){
+			dao = new HistoryDAO();
+		}
+		return dao;
+	}
+	
+	public int insertHistory(Map<String, Object> map){
+		int result = 0;
+		
+		try {
+			result = mapper.update("History.insertHistory", map);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return (int) result;
+	}
+	
+	public List<HistoryVO> selectBefore3DayHistory(){
+		
+		List<HistoryVO> list = new ArrayList<HistoryVO>();
+		
+		try {
+			list = (List<HistoryVO>) mapper.queryForList("History.selectBefore3DayHistory");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return list;
+		
+	}
+	
+}

@@ -1,0 +1,12 @@
+package kr.co.findourlunch.menu;
+
+public class MenuVO {
+
+	
+	private String id;
+	
+	private String name;
+	
+	
+	
+}
